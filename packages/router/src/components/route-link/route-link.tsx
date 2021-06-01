@@ -7,7 +7,7 @@ import ActiveRouter from '../../global/active-router';
 const getUrl = (url: string, root: string) => {
   // Don't allow double slashes
   if (url.charAt(0) == '/' && root.charAt(root.length - 1) == '/') {
-    return root.slice(0, root.length-1) + url;
+    return root.slice(0, root.length - 1) + url;
   }
   return root + url;
 }
@@ -31,9 +31,9 @@ export class RouteLink implements ComponentInterface {
   @Prop() exact: boolean = false;
   @Prop() strict: boolean = true;
 
- /**
-   *  Custom tag to use instead of an anchor
-   */
+  /**
+    *  Custom tag to use instead of an anchor
+    */
   @Prop() custom: string = 'a';
 
   @Prop() anchorClass?: string;
@@ -42,9 +42,9 @@ export class RouteLink implements ComponentInterface {
   @Prop() anchorTabIndex?: string;
   @Prop() anchorId?: string;
 
-  @Prop() history?: RouterHistory;
-  @Prop() location?: LocationSegments;
-  @Prop() root?: string;
+  @Prop({ mutable: true }) history?: RouterHistory;
+  @Prop({ mutable: true }) location?: LocationSegments;
+  @Prop({ mutable: true }) root?: string;
 
   @Prop() ariaHaspopup?: string;
   @Prop() ariaPosinset?: string;
@@ -81,7 +81,7 @@ export class RouteLink implements ComponentInterface {
 
   // Get the URL for this route link without the root from the router
   render() {
-    let anchorAttributes: { [key: string]: any} = {
+    let anchorAttributes: { [key: string]: any } = {
       class: {
         [this.activeClass]: this.match !== null,
       },
@@ -104,7 +104,7 @@ export class RouteLink implements ComponentInterface {
         'aria-posinset': this.ariaPosinset,
         'aria-setsize': this.ariaSetsize,
         'aria-label': this.ariaLabel
-       }
+      }
     }
     return (
       <this.custom {...anchorAttributes}>

@@ -23,11 +23,11 @@ export class Route implements ComponentInterface {
   @Prop() exact: boolean = false;
   @Prop() routeRender?: (props: RouteRenderProps) => any;
   @Prop() scrollTopOffset?: number;
-  @Prop() routeViewsUpdated?: (options: RouteViewOptions) => void;
+  @Prop({ mutable: true }) routeViewsUpdated?: (options: RouteViewOptions) => void;
 
-  @Prop() location?: LocationSegments;
-  @Prop() history?: RouterHistory;
-  @Prop() historyType?: HistoryType;
+  @Prop({ mutable: true }) location?: LocationSegments;
+  @Prop({ mutable: true }) history?: RouterHistory;
+  @Prop({ mutable: true }) historyType?: HistoryType;
 
 
   @Element() el!: HTMLStencilRouteElement;
@@ -71,8 +71,8 @@ export class Route implements ComponentInterface {
     if (typeof this.componentUpdated === 'function') {
       this.componentUpdated(routeViewOptions);
 
-    // If this is an independent route and it matches then routes have updated.
-    // If the only change to location is a hash change then do not scroll.
+      // If this is an independent route and it matches then routes have updated.
+      // If the only change to location is a hash change then do not scroll.
     } else if (this.match && !matchesAreEqual(this.match, this.previousMatch) && this.routeViewsUpdated) {
       this.routeViewsUpdated(routeViewOptions);
     }
